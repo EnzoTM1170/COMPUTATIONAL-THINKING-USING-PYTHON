@@ -1,0 +1,85 @@
+import tkinter as tk
+from tkinter import ttk
+from tkinter.messagebox import showerror
+
+registros = []
+
+def registrar_exame():
+    exame = exame_combobox.get()
+    data = data_entry.get()
+    nome = nome_entry.get()
+    glicose = glicose_entry.get()
+
+    if confirmacao_var.get():
+        if not data or not nome or not glicose:
+            showerror(message="Por favor, preencha todos os campos!")
+        elif data in [registro['data'] for registro in registros]:
+            showerror(message=f"Exame já registrado na data {data}!")
+        else:
+            registro = {
+                'nome': nome,
+                'exame': exame,
+                'glicose': glicose,
+                'data': data
+            }
+            registros.append(registro)
+            resultado_label.config(text=f"Registro: {nome} - {exame} - {glicose} - {data}")
+            clear_entries()
+    else:
+        showerror(message="Você precisa confirmar seus dados.")
+
+def clear_entries():
+    nome_entry.delete(0, tk.END)
+    exame_combobox.set('')
+    glicose_entry.delete(0, tk.END)
+    data_entry.delete(0, tk.END)
+    confirmacao_var.set(False)
+
+def validar_campos():
+    campos_preenchidos = False
+    while not campos_preenchidos:
+        if not nome_entry.get() or not exame_combobox.get() or not glicose_entry.get() or not data_entry.get():
+            showerror(message="Por favor, preencha todos os campos!")
+            break
+        else:
+            campos_preenchidos = True
+
+root = tk.Tk()
+root.title("Registro de exames")
+
+nome_label = ttk.Label(root, text="Nome:")
+nome_label.grid(row=0, column=0, sticky="e", padx=3, pady=3)
+nome_entry = ttk.Entry(root)
+nome_entry.grid(row=0, column=1, sticky="w")
+
+exame_label = ttk.Label(root, text="Tipo de Diabetes:")
+exame_label.grid(row=1, column=0, sticky="e", padx=3, pady=3)
+exame_combobox = ttk.Combobox(root, values=[
+    "Tipo 1",
+    "Tipo 2",
+    "Gestacional",
+    "Pré-diabetes"
+])
+exame_combobox.grid(row=1, column=1, sticky="w")
+
+glicose_label = ttk.Label(root, text="Nível de glicose:")
+glicose_label.grid(row=2, column=0, sticky="e", padx=3, pady=3)
+glicose_entry = ttk.Entry(root)
+glicose_entry.grid(row=2, column=1, sticky="w")
+
+data_label = ttk.Label(root, text="Data:")
+data_label.grid(row=3, column=0, sticky="e", padx=3, pady=3)
+data_entry = ttk.Entry(root)
+data_entry.grid(row=3, column=1, sticky="w")
+
+confirmacao_var = tk.BooleanVar()
+confirmacao_checkbutton = ttk.Checkbutton(root, text="Você confirma os dados inseridos?", variable=confirmacao_var)
+confirmacao_checkbutton.grid(row=4, columnspan=2, sticky="ew", padx=3, pady=3)
+
+registrar_button = ttk.Button(root, text="Registrar", command=lambda: [validar_campos(), registrar_exame()])
+registrar_button.grid(row=5, columnspan=2, padx=3, pady=3)
+
+resultado_label = ttk.Label(root, text="")
+resultado_label.grid(row=6, columnspan=2)
+
+root.mainloop()
