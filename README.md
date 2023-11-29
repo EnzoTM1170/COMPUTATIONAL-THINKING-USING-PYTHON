@@ -28,5 +28,5 @@ O desenvolvimento do glicosímetro exigirá precisão técnica, usabilidade e te
 ## Resultados Esperados
 
 Espera-se melhorar o controle dos níveis de glicose e aumentar o conhecimento sobre diabetes para os usuários. A abordagem integrada visa promover um maior engajamento dos usuários em sua própria saúde e bem-estar, oferecendo suporte abrangente para os diabéticos.
-## Projeto de Pyhon 
+## Projeto de Python 
 O objetivo do nosso projeto é registrar os exames realizados pelos pacientes, armazenando informações essenciais, como o nome do paciente, a data do exame, os níveis de glicose e o tipo específico de diabetes diagnosticado.
